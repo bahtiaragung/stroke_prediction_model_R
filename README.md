@@ -1,33 +1,20 @@
 \# Stroke Prediction
 
-
-
 This repository contains a data science project that focuses on predicting the likelihood of a stroke in individuals based on various health-related features. It is designed as a beginner-level project to practice data analysis, visualization, and machine learning techniques.
-
-
 
 \## 🧠 Objective
 
 To build a predictive model that identifies the risk of stroke using clinical and demographic data.
 
-
-
 \## 📊 Dataset
 
 The dataset includes health indicators such as:
-
 \- Age
-
 \- Hypertension
-
 \- Heart Disease
-
 \- Average Glucose Level
-
 \- BMI
-
 \- Smoking Status
-
 \- etc.
 
 
@@ -39,20 +26,13 @@ The dataset includes health indicators such as:
 
 
 
-
-
 \## 🔍 Project Steps
 
 1\. Data loading and exploration
-
 2\. Data cleaning and preprocessing
-
 3\. Exploratory data analysis (EDA)
-
 4\. Model training (e.g., Random Forest)
-
 5\. Model evaluation
-
 
 
 \## 📁 Files
@@ -61,6 +41,10 @@ The dataset includes health indicators such as:
 
 \- `stroke\_data.csv`: Dataset used for training and testing
 
+## 🔗 Notebook Kaggle
+
+📎 (Link Kaggle)  
+https://www.kaggle.com/code/agungbahtiar/stroke-prediction-model-r
 
 
 \## ✅ Outcome
