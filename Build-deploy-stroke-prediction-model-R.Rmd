@@ -3,8 +3,9 @@ title: "Build and deploy a stroke prediction model using R"
 author: "Agung Bahtiar"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
   html_document: default
+  word_document: default
+  pdf_document: default
 ---
 
 # About Data Analysis Report
