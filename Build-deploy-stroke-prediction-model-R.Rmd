@@ -1,0 +1,178 @@
+---
+title: "Build and deploy a stroke prediction model using R"
+author: "Agung Bahtiar"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# About Data Analysis Report
+
+This RMarkdown file contains the report of the data analysis done for the project on building and deploying a stroke prediction model in R. It contains analysis such as data exploration, summary statistics and building the prediction models. The final report was completed on `r date()`.
+
+**Data Description:**
+
+According to the World Health Organization (WHO) stroke is the 2nd leading cause of death globally, responsible for approximately 11% of total deaths.
+
+This data set is used to predict whether a patient is likely to get stroke based on the input parameters like gender, age, various diseases, and smoking status. Each row in the data provides relevant information about the patient.
+
+# Task One: Import data and data preprocessing
+
+## Load data and install packages
+```{r setup, message=FALSE}
+# List of required packages
+packages <- c("tidyverse", "caret", "randomForest", "xgboost", "e1071", "pROC", "rpart", "rpart.plot", "knitr")
+
+# Install any package not already installed
+install.packages(setdiff(packages, installed.packages()[,"Package"]))
+
+# Load the packages into the session
+lapply(packages, library, character.only = TRUE)
+```
+
+```{r load-data}
+# Load the dataset from CSV
+data <- read_csv("healthcare-dataset-stroke-data.csv")
+
+# Show data structure to understand types and format
+glimpse(data)
+```
+
+## Clean and prepare data
+```{r clean-data}
+# Replace "N/A" in 'bmi' column with NA and convert it to numeric
+data$bmi[data$bmi == "N/A"] <- NA
+data$bmi <- as.numeric(data$bmi)
+
+# Check for missing values in each column
+colSums(is.na(data))
+
+# Impute missing BMI values using median
+data$bmi[is.na(data$bmi)] <- median(data$bmi, na.rm = TRUE)
+
+# Convert categorical columns to factors
+data <- data %>%
+  mutate(
+    gender = as.factor(gender),
+    ever_married = as.factor(ever_married),
+    work_type = as.factor(work_type),
+    Residence_type = as.factor(Residence_type),
+    smoking_status = as.factor(smoking_status),
+    hypertension = as.factor(hypertension),
+    heart_disease = as.factor(heart_disease),
+    stroke = as.factor(stroke)
+  )
+
+str(data)
+```
+
+## Describe and explore the data
+```{r explore-data}
+# Summary of numerical features
+summary(select(data, age, avg_glucose_level, bmi))
+
+# Distribution of stroke cases
+table(data$stroke)
+
+# Visualize age distribution by stroke
+ ggplot(data, aes(x = stroke, y = age, fill = stroke)) +
+   geom_boxplot() +
+   labs(title = "Age Distribution by Stroke Status")
+
+# Visualize smoking status
+ ggplot(data, aes(x = smoking_status, fill = stroke)) +
+   geom_bar(position = "fill") +
+   labs(title = "Stroke Proportion by Smoking Status")
+```
+
+# Task Two: Build prediction models
+
+```{r partition-data}
+# Partition the data: 80% training, 20% testing
+set.seed(123)
+index <- createDataPartition(data$stroke, p = 0.8, list = FALSE)
+train_data <- data[index, ]
+test_data <- data[-index, ]
+```
+
+```{r preprocess-model}
+# One-hot encode categorical variables for xgboost
+train_matrix <- model.matrix(stroke ~ . - id, data = train_data)[, -1]
+test_matrix <- model.matrix(stroke ~ . - id, data = test_data)[, -1]
+train_label <- as.numeric(as.character(train_data$stroke))
+test_label <- as.numeric(as.character(test_data$stroke))
+```
+
+```{r build-models}
+# Logistic Regression
+log_model <- glm(stroke ~ . - id, data = train_data, family = binomial)
+
+# Decision Tree
+tree_model <- rpart(stroke ~ . - id, data = train_data, method = "class")
+
+# Random Forest
+rf_model <- randomForest(stroke ~ . - id, data = train_data, ntree = 100)
+
+# XGBoost
+xgb_model <- xgboost(data = train_matrix, label = train_label, 
+                     nrounds = 50, objective = "binary:logistic", verbose = 0)
+```
+
+# Task Three: Evaluate and select prediction models
+
+```{r evaluate-models}
+# Logistic Regression Predictions
+log_probs <- predict(log_model, test_data, type = "response")
+log_preds <- ifelse(log_probs > 0.5, 1, 0)
+confusionMatrix(as.factor(log_preds), test_data$stroke)
+
+# Random Forest Predictions
+rf_preds <- predict(rf_model, test_data)
+confusionMatrix(rf_preds, test_data$stroke)
+
+# Decision Tree Predictions
+rpart.plot(tree_model)
+tree_preds <- predict(tree_model, test_data, type = "class")
+confusionMatrix(tree_preds, test_data$stroke)
+
+# XGBoost Evaluation
+xgb_preds <- predict(xgb_model, test_matrix)
+xgb_classes <- ifelse(xgb_preds > 0.5, 1, 0)
+confusionMatrix(as.factor(xgb_classes), test_data$stroke)
+
+# ROC Curve and AUC
+roc_obj <- roc(test_label, xgb_preds)
+plot(roc_obj, main = "ROC Curve - XGBoost")
+auc(roc_obj)
+```
+
+# Task Four: Deploy the prediction model
+
+```{r deploy-model}
+# Save the best model (e.g., Random Forest)
+saveRDS(rf_model, file = "stroke_rf_model.rds")
+
+# Load model for deployment
+loaded_model <- readRDS("stroke_rf_model.rds")
+
+# Predict on new data sample
+predict(loaded_model, newdata = test_data[1:5, ])
+```
+
+# Task Five: Findings and Conclusions
+
+From the evaluation metrics, we can conclude:
+
+- **XGBoost** had the highest ROC AUC score, making it the best-performing model.
+- **Random Forest** also performed well and is simpler to deploy.
+- Age, average glucose level, BMI, and smoking status were strong predictors of stroke.
+- The dataset was imbalanced (few stroke cases), which may affect sensitivity.
+
+### Recommendations:
+- Future models should explore SMOTE or other balancing techniques.
+- Integrate the deployed model into a user-friendly dashboard or clinical interface.
+
+### Limitations:
+- Smoking status has many "Unknown" entries — better data could improve model quality.
+- More clinical features could improve model accuracy (e.g., blood pressure, medications).

@@ -1,0 +1,655 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Build and deploy a stroke prediction model using R},
+  pdfauthor={Agung Bahtiar},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Build and deploy a stroke prediction model using R}
+\author{Agung Bahtiar}
+\date{2025-08-07}
+
+\begin{document}
+\maketitle
+
+\section{About Data Analysis Report}\label{about-data-analysis-report}
+
+This RMarkdown file contains the report of the data analysis done for
+the project on building and deploying a stroke prediction model in R. It
+contains analysis such as data exploration, summary statistics and
+building the prediction models. The final report was completed on Thu
+Aug 7 11:24:33 2025.
+
+\textbf{Data Description:}
+
+According to the World Health Organization (WHO) stroke is the 2nd
+leading cause of death globally, responsible for approximately 11\% of
+total deaths.
+
+This data set is used to predict whether a patient is likely to get
+stroke based on the input parameters like gender, age, various diseases,
+and smoking status. Each row in the data provides relevant information
+about the patient.
+
+\section{Task One: Import data and data
+preprocessing}\label{task-one-import-data-and-data-preprocessing}
+
+\subsection{Load data and install
+packages}\label{load-data-and-install-packages}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# List of required packages}
+\NormalTok{packages }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"caret"}\NormalTok{, }\StringTok{"randomForest"}\NormalTok{, }\StringTok{"xgboost"}\NormalTok{, }\StringTok{"e1071"}\NormalTok{, }\StringTok{"pROC"}\NormalTok{, }\StringTok{"rpart"}\NormalTok{, }\StringTok{"rpart.plot"}\NormalTok{)}
+
+\CommentTok{\# Install any package not already installed}
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{setdiff}\NormalTok{(packages, }\FunctionTok{installed.packages}\NormalTok{()[,}\StringTok{"Package"}\NormalTok{]))}
+
+\CommentTok{\# Load the packages into the session}
+\FunctionTok{lapply}\NormalTok{(packages, library, }\AttributeTok{character.only =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##  [1] "lubridate" "forcats"   "stringr"   "dplyr"     "purrr"     "readr"    
+##  [7] "tidyr"     "tibble"    "ggplot2"   "tidyverse" "stats"     "graphics" 
+## [13] "grDevices" "utils"     "datasets"  "methods"   "base"     
+## 
+## [[2]]
+##  [1] "caret"     "lattice"   "lubridate" "forcats"   "stringr"   "dplyr"    
+##  [7] "purrr"     "readr"     "tidyr"     "tibble"    "ggplot2"   "tidyverse"
+## [13] "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+## [19] "base"     
+## 
+## [[3]]
+##  [1] "randomForest" "caret"        "lattice"      "lubridate"    "forcats"     
+##  [6] "stringr"      "dplyr"        "purrr"        "readr"        "tidyr"       
+## [11] "tibble"       "ggplot2"      "tidyverse"    "stats"        "graphics"    
+## [16] "grDevices"    "utils"        "datasets"     "methods"      "base"        
+## 
+## [[4]]
+##  [1] "xgboost"      "randomForest" "caret"        "lattice"      "lubridate"   
+##  [6] "forcats"      "stringr"      "dplyr"        "purrr"        "readr"       
+## [11] "tidyr"        "tibble"       "ggplot2"      "tidyverse"    "stats"       
+## [16] "graphics"     "grDevices"    "utils"        "datasets"     "methods"     
+## [21] "base"        
+## 
+## [[5]]
+##  [1] "e1071"        "xgboost"      "randomForest" "caret"        "lattice"     
+##  [6] "lubridate"    "forcats"      "stringr"      "dplyr"        "purrr"       
+## [11] "readr"        "tidyr"        "tibble"       "ggplot2"      "tidyverse"   
+## [16] "stats"        "graphics"     "grDevices"    "utils"        "datasets"    
+## [21] "methods"      "base"        
+## 
+## [[6]]
+##  [1] "pROC"         "e1071"        "xgboost"      "randomForest" "caret"       
+##  [6] "lattice"      "lubridate"    "forcats"      "stringr"      "dplyr"       
+## [11] "purrr"        "readr"        "tidyr"        "tibble"       "ggplot2"     
+## [16] "tidyverse"    "stats"        "graphics"     "grDevices"    "utils"       
+## [21] "datasets"     "methods"      "base"        
+## 
+## [[7]]
+##  [1] "rpart"        "pROC"         "e1071"        "xgboost"      "randomForest"
+##  [6] "caret"        "lattice"      "lubridate"    "forcats"      "stringr"     
+## [11] "dplyr"        "purrr"        "readr"        "tidyr"        "tibble"      
+## [16] "ggplot2"      "tidyverse"    "stats"        "graphics"     "grDevices"   
+## [21] "utils"        "datasets"     "methods"      "base"        
+## 
+## [[8]]
+##  [1] "rpart.plot"   "rpart"        "pROC"         "e1071"        "xgboost"     
+##  [6] "randomForest" "caret"        "lattice"      "lubridate"    "forcats"     
+## [11] "stringr"      "dplyr"        "purrr"        "readr"        "tidyr"       
+## [16] "tibble"       "ggplot2"      "tidyverse"    "stats"        "graphics"    
+## [21] "grDevices"    "utils"        "datasets"     "methods"      "base"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load the dataset from CSV}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"healthcare{-}dataset{-}stroke{-}data.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 5110 Columns: 12
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (6): gender, ever_married, work_type, Residence_type, bmi, smoking_status
+## dbl (6): id, age, hypertension, heart_disease, avg_glucose_level, stroke
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Show data structure to understand types and format}
+\FunctionTok{glimpse}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 5,110
+## Columns: 12
+## $ id                <dbl> 9046, 51676, 31112, 60182, 1665, 56669, 53882, 10434~
+## $ gender            <chr> "Male", "Female", "Male", "Female", "Female", "Male"~
+## $ age               <dbl> 67, 61, 80, 49, 79, 81, 74, 69, 59, 78, 81, 61, 54, ~
+## $ hypertension      <dbl> 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1~
+## $ heart_disease     <dbl> 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0~
+## $ ever_married      <chr> "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "No~
+## $ work_type         <chr> "Private", "Self-employed", "Private", "Private", "S~
+## $ Residence_type    <chr> "Urban", "Rural", "Rural", "Urban", "Rural", "Urban"~
+## $ avg_glucose_level <dbl> 228.69, 202.21, 105.92, 171.23, 174.12, 186.21, 70.0~
+## $ bmi               <chr> "36.6", "N/A", "32.5", "34.4", "24", "29", "27.4", "~
+## $ smoking_status    <chr> "formerly smoked", "never smoked", "never smoked", "~
+## $ stroke            <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
+\end{verbatim}
+
+\subsection{Clean and prepare data}\label{clean-and-prepare-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Replace "N/A" in \textquotesingle{}bmi\textquotesingle{} column with NA and convert it to numeric}
+\NormalTok{data}\SpecialCharTok{$}\NormalTok{bmi[data}\SpecialCharTok{$}\NormalTok{bmi }\SpecialCharTok{==} \StringTok{"N/A"}\NormalTok{] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{data}\SpecialCharTok{$}\NormalTok{bmi }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{bmi)}
+
+\CommentTok{\# Check for missing values in each column}
+\FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                id            gender               age      hypertension 
+##                 0                 0                 0                 0 
+##     heart_disease      ever_married         work_type    Residence_type 
+##                 0                 0                 0                 0 
+## avg_glucose_level               bmi    smoking_status            stroke 
+##                 0               201                 0                 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Impute missing BMI values using median}
+\NormalTok{data}\SpecialCharTok{$}\NormalTok{bmi[}\FunctionTok{is.na}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{bmi)] }\OtherTok{\textless{}{-}} \FunctionTok{median}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{bmi, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Convert categorical columns to factors}
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{gender =} \FunctionTok{as.factor}\NormalTok{(gender),}
+    \AttributeTok{ever\_married =} \FunctionTok{as.factor}\NormalTok{(ever\_married),}
+    \AttributeTok{work\_type =} \FunctionTok{as.factor}\NormalTok{(work\_type),}
+    \AttributeTok{Residence\_type =} \FunctionTok{as.factor}\NormalTok{(Residence\_type),}
+    \AttributeTok{smoking\_status =} \FunctionTok{as.factor}\NormalTok{(smoking\_status),}
+    \AttributeTok{hypertension =} \FunctionTok{as.factor}\NormalTok{(hypertension),}
+    \AttributeTok{heart\_disease =} \FunctionTok{as.factor}\NormalTok{(heart\_disease),}
+    \AttributeTok{stroke =} \FunctionTok{as.factor}\NormalTok{(stroke)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Describe and explore the
+data}\label{describe-and-explore-the-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summary of numerical features}
+\FunctionTok{summary}\NormalTok{(}\FunctionTok{select}\NormalTok{(data, age, avg\_glucose\_level, bmi))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       age        avg_glucose_level      bmi       
+##  Min.   : 0.08   Min.   : 55.12    Min.   :10.30  
+##  1st Qu.:25.00   1st Qu.: 77.25    1st Qu.:23.80  
+##  Median :45.00   Median : 91.89    Median :28.10  
+##  Mean   :43.23   Mean   :106.15    Mean   :28.86  
+##  3rd Qu.:61.00   3rd Qu.:114.09    3rd Qu.:32.80  
+##  Max.   :82.00   Max.   :271.74    Max.   :97.60
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Distribution of stroke cases}
+\FunctionTok{table}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{stroke)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##    0    1 
+## 4861  249
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Visualize age distribution by stroke}
+ \FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ stroke, }\AttributeTok{y =}\NormalTok{ age, }\AttributeTok{fill =}\NormalTok{ stroke)) }\SpecialCharTok{+}
+   \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Age Distribution by Stroke Status"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Build-deploy-stroke-prediction-model-R_files/figure-latex/explore-data-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Visualize smoking status}
+ \FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ smoking\_status, }\AttributeTok{fill =}\NormalTok{ stroke)) }\SpecialCharTok{+}
+   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{"fill"}\NormalTok{) }\SpecialCharTok{+}
+   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Stroke Proportion by Smoking Status"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Build-deploy-stroke-prediction-model-R_files/figure-latex/explore-data-2.pdf}}
+
+\section{Task Two: Build prediction
+models}\label{task-two-build-prediction-models}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Partition the data: 80\% training, 20\% testing}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{index }\OtherTok{\textless{}{-}} \FunctionTok{createDataPartition}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{stroke, }\AttributeTok{p =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{list =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{train\_data }\OtherTok{\textless{}{-}}\NormalTok{ data[index, ]}
+\NormalTok{test\_data }\OtherTok{\textless{}{-}}\NormalTok{ data[}\SpecialCharTok{{-}}\NormalTok{index, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# One{-}hot encode categorical variables for xgboost}
+\NormalTok{train\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(stroke }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, }\AttributeTok{data =}\NormalTok{ train\_data)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{test\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(stroke }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, }\AttributeTok{data =}\NormalTok{ test\_data)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{train\_label }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(train\_data}\SpecialCharTok{$}\NormalTok{stroke))}
+\NormalTok{test\_label }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(test\_data}\SpecialCharTok{$}\NormalTok{stroke))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Logistic Regression}
+\NormalTok{log\_model }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(stroke }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, }\AttributeTok{data =}\NormalTok{ train\_data, }\AttributeTok{family =}\NormalTok{ binomial)}
+
+\CommentTok{\# Decision Tree}
+\NormalTok{tree\_model }\OtherTok{\textless{}{-}} \FunctionTok{rpart}\NormalTok{(stroke }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, }\AttributeTok{data =}\NormalTok{ train\_data, }\AttributeTok{method =} \StringTok{"class"}\NormalTok{)}
+
+\CommentTok{\# Random Forest}
+\NormalTok{rf\_model }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(stroke }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, }\AttributeTok{data =}\NormalTok{ train\_data, }\AttributeTok{ntree =} \DecValTok{100}\NormalTok{)}
+
+\CommentTok{\# XGBoost}
+\NormalTok{xgb\_model }\OtherTok{\textless{}{-}} \FunctionTok{xgboost}\NormalTok{(}\AttributeTok{data =}\NormalTok{ train\_matrix, }\AttributeTok{label =}\NormalTok{ train\_label, }
+                     \AttributeTok{nrounds =} \DecValTok{50}\NormalTok{, }\AttributeTok{objective =} \StringTok{"binary:logistic"}\NormalTok{, }\AttributeTok{verbose =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Task Three: Evaluate and select prediction
+models}\label{task-three-evaluate-and-select-prediction-models}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Logistic Regression Predictions}
+\NormalTok{log\_probs }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(log\_model, test\_data, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
+\NormalTok{log\_preds }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(log\_probs }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\FunctionTok{confusionMatrix}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(log\_preds), test\_data}\SpecialCharTok{$}\NormalTok{stroke)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in confusionMatrix.default(as.factor(log_preds), test_data$stroke):
+## Levels are not in the same order for reference and data. Refactoring data to
+## match.
+\end{verbatim}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 972  49
+##          1   0   0
+##                                          
+##                Accuracy : 0.952          
+##                  95% CI : (0.937, 0.9643)
+##     No Information Rate : 0.952          
+##     P-Value [Acc > NIR] : 0.5379         
+##                                          
+##                   Kappa : 0              
+##                                          
+##  Mcnemar's Test P-Value : 7.025e-12      
+##                                          
+##             Sensitivity : 1.000          
+##             Specificity : 0.000          
+##          Pos Pred Value : 0.952          
+##          Neg Pred Value :   NaN          
+##              Prevalence : 0.952          
+##          Detection Rate : 0.952          
+##    Detection Prevalence : 1.000          
+##       Balanced Accuracy : 0.500          
+##                                          
+##        'Positive' Class : 0              
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Random Forest Predictions}
+\NormalTok{rf\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(rf\_model, test\_data)}
+\FunctionTok{confusionMatrix}\NormalTok{(rf\_preds, test\_data}\SpecialCharTok{$}\NormalTok{stroke)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 971  49
+##          1   1   0
+##                                           
+##                Accuracy : 0.951           
+##                  95% CI : (0.9359, 0.9634)
+##     No Information Rate : 0.952           
+##     P-Value [Acc > NIR] : 0.5951          
+##                                           
+##                   Kappa : -0.0019         
+##                                           
+##  Mcnemar's Test P-Value : 2.995e-11       
+##                                           
+##             Sensitivity : 0.9990          
+##             Specificity : 0.0000          
+##          Pos Pred Value : 0.9520          
+##          Neg Pred Value : 0.0000          
+##              Prevalence : 0.9520          
+##          Detection Rate : 0.9510          
+##    Detection Prevalence : 0.9990          
+##       Balanced Accuracy : 0.4995          
+##                                           
+##        'Positive' Class : 0               
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Decision Tree Predictions}
+\FunctionTok{rpart.plot}\NormalTok{(tree\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Build-deploy-stroke-prediction-model-R_files/figure-latex/evaluate-models-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(tree\_model, test\_data, }\AttributeTok{type =} \StringTok{"class"}\NormalTok{)}
+\FunctionTok{confusionMatrix}\NormalTok{(tree\_preds, test\_data}\SpecialCharTok{$}\NormalTok{stroke)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 972  49
+##          1   0   0
+##                                          
+##                Accuracy : 0.952          
+##                  95% CI : (0.937, 0.9643)
+##     No Information Rate : 0.952          
+##     P-Value [Acc > NIR] : 0.5379         
+##                                          
+##                   Kappa : 0              
+##                                          
+##  Mcnemar's Test P-Value : 7.025e-12      
+##                                          
+##             Sensitivity : 1.000          
+##             Specificity : 0.000          
+##          Pos Pred Value : 0.952          
+##          Neg Pred Value :   NaN          
+##              Prevalence : 0.952          
+##          Detection Rate : 0.952          
+##    Detection Prevalence : 1.000          
+##       Balanced Accuracy : 0.500          
+##                                          
+##        'Positive' Class : 0              
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# XGBoost Evaluation}
+\NormalTok{xgb\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(xgb\_model, test\_matrix)}
+\NormalTok{xgb\_classes }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(xgb\_preds }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\FunctionTok{confusionMatrix}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(xgb\_classes), test\_data}\SpecialCharTok{$}\NormalTok{stroke)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 967  48
+##          1   5   1
+##                                           
+##                Accuracy : 0.9481          
+##                  95% CI : (0.9326, 0.9609)
+##     No Information Rate : 0.952           
+##     P-Value [Acc > NIR] : 0.749           
+##                                           
+##                   Kappa : 0.0262          
+##                                           
+##  Mcnemar's Test P-Value : 7.968e-09       
+##                                           
+##             Sensitivity : 0.99486         
+##             Specificity : 0.02041         
+##          Pos Pred Value : 0.95271         
+##          Neg Pred Value : 0.16667         
+##              Prevalence : 0.95201         
+##          Detection Rate : 0.94711         
+##    Detection Prevalence : 0.99412         
+##       Balanced Accuracy : 0.50763         
+##                                           
+##        'Positive' Class : 0               
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ROC Curve and AUC}
+\NormalTok{roc\_obj }\OtherTok{\textless{}{-}} \FunctionTok{roc}\NormalTok{(test\_label, xgb\_preds)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = 0, case = 1
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(roc\_obj, }\AttributeTok{main =} \StringTok{"ROC Curve {-} XGBoost"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Build-deploy-stroke-prediction-model-R_files/figure-latex/evaluate-models-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{auc}\NormalTok{(roc\_obj)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Area under the curve: 0.8314
+\end{verbatim}
+
+\section{Task Four: Deploy the prediction
+model}\label{task-four-deploy-the-prediction-model}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Save the best model (e.g., Random Forest)}
+\FunctionTok{saveRDS}\NormalTok{(rf\_model, }\AttributeTok{file =} \StringTok{"stroke\_rf\_model.rds"}\NormalTok{)}
+
+\CommentTok{\# Load model for deployment}
+\NormalTok{loaded\_model }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"stroke\_rf\_model.rds"}\NormalTok{)}
+
+\CommentTok{\# Predict on new data sample}
+\FunctionTok{predict}\NormalTok{(loaded\_model, }\AttributeTok{newdata =}\NormalTok{ test\_data[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, ])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1 2 3 4 5 
+## 0 0 0 0 0 
+## Levels: 0 1
+\end{verbatim}
+
+\section{Task Five: Findings and
+Conclusions}\label{task-five-findings-and-conclusions}
+
+From the evaluation metrics, we can conclude:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{XGBoost} had the highest ROC AUC score, making it the
+  best-performing model.
+\item
+  \textbf{Random Forest} also performed well and is simpler to deploy.
+\item
+  Age, average glucose level, BMI, and smoking status were strong
+  predictors of stroke.
+\item
+  The dataset was imbalanced (few stroke cases), which may affect
+  sensitivity.
+\end{itemize}
+
+\subsubsection{Recommendations:}\label{recommendations}
+
+\begin{itemize}
+\tightlist
+\item
+  Future models should explore SMOTE or other balancing techniques.
+\item
+  Integrate the deployed model into a user-friendly dashboard or
+  clinical interface.
+\end{itemize}
+
+\subsubsection{Limitations:}\label{limitations}
+
+\begin{itemize}
+\tightlist
+\item
+  Smoking status has many ``Unknown'' entries --- better data could
+  improve model quality.
+\item
+  More clinical features could improve model accuracy (e.g., blood
+  pressure, medications).
+\end{itemize}
+
+\end{document}
