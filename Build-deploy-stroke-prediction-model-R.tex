@@ -118,7 +118,7 @@ This RMarkdown file contains the report of the data analysis done for
 the project on building and deploying a stroke prediction model in R. It
 contains analysis such as data exploration, summary statistics and
 building the prediction models. The final report was completed on Thu
-Aug 7 11:24:33 2025.
+Aug 7 12:34:35 2025.
 
 \textbf{Data Description:}
 
@@ -140,7 +140,7 @@ packages}\label{load-data-and-install-packages}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# List of required packages}
-\NormalTok{packages }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"caret"}\NormalTok{, }\StringTok{"randomForest"}\NormalTok{, }\StringTok{"xgboost"}\NormalTok{, }\StringTok{"e1071"}\NormalTok{, }\StringTok{"pROC"}\NormalTok{, }\StringTok{"rpart"}\NormalTok{, }\StringTok{"rpart.plot"}\NormalTok{)}
+\NormalTok{packages }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"caret"}\NormalTok{, }\StringTok{"randomForest"}\NormalTok{, }\StringTok{"xgboost"}\NormalTok{, }\StringTok{"e1071"}\NormalTok{, }\StringTok{"pROC"}\NormalTok{, }\StringTok{"rpart"}\NormalTok{, }\StringTok{"rpart.plot"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{)}
 
 \CommentTok{\# Install any package not already installed}
 \FunctionTok{install.packages}\NormalTok{(}\FunctionTok{setdiff}\NormalTok{(packages, }\FunctionTok{installed.packages}\NormalTok{()[,}\StringTok{"Package"}\NormalTok{]))}
@@ -201,7 +201,15 @@ packages}\label{load-data-and-install-packages}
 ##  [6] "randomForest" "caret"        "lattice"      "lubridate"    "forcats"     
 ## [11] "stringr"      "dplyr"        "purrr"        "readr"        "tidyr"       
 ## [16] "tibble"       "ggplot2"      "tidyverse"    "stats"        "graphics"    
-## [21] "grDevices"    "utils"        "datasets"     "methods"      "base"
+## [21] "grDevices"    "utils"        "datasets"     "methods"      "base"        
+## 
+## [[9]]
+##  [1] "knitr"        "rpart.plot"   "rpart"        "pROC"         "e1071"       
+##  [6] "xgboost"      "randomForest" "caret"        "lattice"      "lubridate"   
+## [11] "forcats"      "stringr"      "dplyr"        "purrr"        "readr"       
+## [16] "tidyr"        "tibble"       "ggplot2"      "tidyverse"    "stats"       
+## [21] "graphics"     "grDevices"    "utils"        "datasets"     "methods"     
+## [26] "base"
 \end{verbatim}
 
 \begin{Shaded}
@@ -285,8 +293,26 @@ packages}\label{load-data-and-install-packages}
     \AttributeTok{heart\_disease =} \FunctionTok{as.factor}\NormalTok{(heart\_disease),}
     \AttributeTok{stroke =} \FunctionTok{as.factor}\NormalTok{(stroke)}
 \NormalTok{  )}
+
+\FunctionTok{str}\NormalTok{(data)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## tibble [5,110 x 12] (S3: tbl_df/tbl/data.frame)
+##  $ id               : num [1:5110] 9046 51676 31112 60182 1665 ...
+##  $ gender           : Factor w/ 3 levels "Female","Male",..: 2 1 2 1 1 2 2 1 1 1 ...
+##  $ age              : num [1:5110] 67 61 80 49 79 81 74 69 59 78 ...
+##  $ hypertension     : Factor w/ 2 levels "0","1": 1 1 1 1 2 1 2 1 1 1 ...
+##  $ heart_disease    : Factor w/ 2 levels "0","1": 2 1 2 1 1 1 2 1 1 1 ...
+##  $ ever_married     : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 1 2 2 ...
+##  $ work_type        : Factor w/ 5 levels "children","Govt_job",..: 4 5 4 4 5 4 4 4 4 4 ...
+##  $ Residence_type   : Factor w/ 2 levels "Rural","Urban": 2 1 1 2 1 2 1 2 1 2 ...
+##  $ avg_glucose_level: num [1:5110] 229 202 106 171 174 ...
+##  $ bmi              : num [1:5110] 36.6 28.1 32.5 34.4 24 29 27.4 22.8 28.1 24.2 ...
+##  $ smoking_status   : Factor w/ 4 levels "formerly smoked",..: 1 2 2 3 2 1 2 2 4 4 ...
+##  $ stroke           : Factor w/ 2 levels "0","1": 2 2 2 2 2 2 2 2 2 2 ...
+\end{verbatim}
 
 \subsection{Describe and explore the
 data}\label{describe-and-explore-the-data}
